@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './App.css';
 import CustomHeader, {addNumber} from './components/CustomHeader';
 import Counter from './components/Counter';
+import Przycisk from './components/Przycisk';
 
 const App = () => {
   const addedNumber=addNumber(1,2);
@@ -9,19 +10,43 @@ const App = () => {
   const handleNumberChange = (newNumber: number) => {
     setChangedNumber(newNumber);
   }
-  const liczbaMniejszaodZera = (liczba: number) => {
-    if(liczba < 0) {
-      return (<div>Liczba jest mniejsza od 0</div>);
+
+  const decreaseNumberr = () =>{
+    setChangedNumber(changedNumber-1);
+  }
+
+  const adddNumber = () =>{
+    setChangedNumber(changedNumber+1);
+  }
+
+  const defaultValue = () =>{
+    setChangedNumber(0);
+  }
+  const Conditions = (liczba: number) => {
+    if(liczba>15)
+    {
+      return(<div>Liczba przekroczona</div>);
     }
-  } 
+    else if(liczba > 10) 
+    {
+      return (<div>Liczba jest wieksza od 10</div>);
+    }
+    else if(liczba<-10)
+    {
+      return (<div>Liczba jest mniejsza od -10</div>);
+    }
+  }
+
   return (
     <div className="App">
       <CustomHeader>
-        <Counter onNumberChange={handleNumberChange} />
+        <Przycisk onNumberChange={adddNumber} name="Plus"></Przycisk>
+        <Przycisk onNumberChange={defaultValue} name="Domyślna"></Przycisk>
+        <Przycisk onNumberChange={decreaseNumberr} name="Minus"></Przycisk>
+        {changedNumber}
         {
-          changedNumber > 0 && (<div> Liczba jest większa od 0</div>) 
+          Conditions(changedNumber)
         }
-        {liczbaMniejszaodZera(changedNumber)}
       </CustomHeader>  
     </div>
   );
